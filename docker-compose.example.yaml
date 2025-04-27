@@ -1,0 +1,22 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: ${CONTAINER_NAME}
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - "${ALLOW_HOST}:${RABBITMQ_PORT}:5672"
+      - "${ALLOW_HOST}:${RABBITMQ_MANAGEMENT_PORT}:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - ${NETWORK_NAME}
+
+volumes:
+  rabbitmq-data:
+    driver: local
+
+networks:
+  ${NETWORK_NAME}:
+    external: true
